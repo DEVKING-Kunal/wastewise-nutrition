@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { IngredientInput, Ingredient } from '@/components/IngredientInput';
@@ -9,13 +8,11 @@ import { Calculator as CalculatorIcon, Save, SparkleIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { getPersonalizedInsights } from '@/utils/geminiService';
+import Loader from '@/components/Loader';
 
-// Mock nutrition data calculation - in a real app this would fetch from an API
 const calculateNutrition = (ingredients: Ingredient[]): NutritionData => {
-  // Simple mock calculation based on ingredient amounts
   const totalWeight = ingredients.reduce((sum, ing) => {
     if (ing.unit === 'g') return sum + ing.amount;
-    // Convert other units to grams (just for demo)
     if (ing.unit === 'ml') return sum + ing.amount * 1;
     if (ing.unit === 'cups') return sum + ing.amount * 240;
     if (ing.unit === 'tbsp') return sum + ing.amount * 15;
@@ -23,7 +20,6 @@ const calculateNutrition = (ingredients: Ingredient[]): NutritionData => {
     return sum + ing.amount;
   }, 0);
 
-  // Mock calculation - in reality would be based on a food database
   return {
     calories: Math.round(totalWeight * 1.5),
     protein: Math.round(totalWeight * 0.05),
@@ -47,7 +43,6 @@ const Calculator: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Recalculate nutrition whenever ingredients change
     setNutrition(calculateNutrition(ingredients));
   }, [ingredients]);
 
@@ -57,7 +52,6 @@ const Calculator: React.FC = () => {
       return;
     }
     
-    // In a real app, this would save to database
     toast.success("Recipe saved successfully");
   };
 
@@ -69,14 +63,12 @@ const Calculator: React.FC = () => {
 
     setIsLoading(true);
     try {
-      // This would make a real call to the Gemini API once implemented
       toast.info("To get AI insights, you need to configure the Gemini API. See the implementation guide in the geminiService.ts file.");
       
-      // The actual implementation would look like this:
       /*
       const insights = await getPersonalizedInsights({
-        location: "Your location", // Would come from user profile
-        season: "Current season",  // Could be determined automatically
+        location: "Your location",
+        season: "Current season",
         dietaryPreferences: ["Example preference"],
         healthGoals: ["Example goal"],
         currentNutrients: nutrition,
@@ -108,6 +100,8 @@ const Calculator: React.FC = () => {
       <Navbar />
       <TransitionLayout>
         <div className="container mx-auto px-4 pt-20 pb-24 md:pt-24 md:pb-32">
+          {isLoading && <Loader fullScreen text="Generating AI insights..." />}
+          
           <FadeInStagger className="space-y-6">
             <FadeIn>
               <div className="flex items-center space-x-3 mb-8">

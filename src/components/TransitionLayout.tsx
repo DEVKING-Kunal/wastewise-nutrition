@@ -1,37 +1,43 @@
 
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
+import { motion } from 'framer-motion';
+import CustomFooter from './CustomFooter';
 
-interface TransitionLayoutProps {
-  children: React.ReactNode;
-}
+const pageVariants = {
+  initial: {
+    opacity: 0,
+    y: 10
+  },
+  in: {
+    opacity: 1,
+    y: 0
+  },
+  out: {
+    opacity: 0,
+    y: -10
+  }
+};
 
-const TransitionLayout: React.FC<TransitionLayoutProps> = ({ children }) => {
-  const location = useLocation();
-  const [displayLocation, setDisplayLocation] = useState(location);
-  const [transitionStage, setTransitionStage] = useState("fadeIn");
+const pageTransition = {
+  type: 'tween',
+  ease: 'easeInOut',
+  duration: 0.3
+};
 
-  useEffect(() => {
-    if (location !== displayLocation) {
-      setTransitionStage("fadeOut");
-    }
-  }, [location, displayLocation]);
-
-  const handleAnimationEnd = () => {
-    if (transitionStage === "fadeOut") {
-      setTransitionStage("fadeIn");
-      setDisplayLocation(location);
-    }
-  };
-
+const TransitionLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div
-      className={`min-h-[calc(100vh-4rem)] w-full ${
-        transitionStage === "fadeIn" ? "animate-fade-in" : "animate-fade-out"
-      }`}
-      onAnimationEnd={handleAnimationEnd}
-    >
-      {children}
+    <div className="flex flex-col min-h-screen">
+      <motion.main
+        initial="initial"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
+        transition={pageTransition}
+        className="flex-grow"
+      >
+        {children}
+      </motion.main>
+      <CustomFooter />
     </div>
   );
 };
