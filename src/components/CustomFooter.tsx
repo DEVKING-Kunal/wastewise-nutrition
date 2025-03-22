@@ -15,7 +15,7 @@ export const CustomFooter: React.FC = () => {
           
           <div className="flex gap-4">
             <a 
-              href="https://github.com" 
+              href="https://github.com/kunaltyagi9" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
@@ -24,7 +24,7 @@ export const CustomFooter: React.FC = () => {
               <span className="sr-only">GitHub</span>
             </a>
             <a 
-              href="https://twitter.com" 
+              href="https://twitter.com/kunaltyagi9" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
@@ -33,7 +33,7 @@ export const CustomFooter: React.FC = () => {
               <span className="sr-only">Twitter</span>
             </a>
             <a 
-              href="https://linkedin.com" 
+              href="https://linkedin.com/in/kunaltyagi9" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"

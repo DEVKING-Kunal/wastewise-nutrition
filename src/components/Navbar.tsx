@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const { user, logout } = useAuth();
+  const { currentUser, logout } = useAuth();
 
   // Handle scroll effects
   useEffect(() => {
@@ -81,7 +81,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center space-x-2">
             <ThemeToggle />
             
-            {user ? (
+            {currentUser ? (
               <>
                 <Link to="/profile">
                   <Button variant="outline" size="sm" className="hidden md:flex">
@@ -130,7 +130,7 @@ export const Navbar: React.FC = () => {
             <NavLink to="/waste-tracker" icon={BarChart2} label="Waste Tracker" isActive={isLinkActive('/waste-tracker')} />
             <NavLink to="/profile" icon={User} label="Profile" isActive={isLinkActive('/profile')} />
             
-            {user ? (
+            {currentUser ? (
               <Button 
                 variant="ghost" 
                 size="sm" 
@@ -155,3 +155,5 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+
+export default Navbar;
