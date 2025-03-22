@@ -1,9 +1,8 @@
-Based on the information available, here's a suggested README content for the 'wastewise-nutrition' project:
+Based on the information available, here's a suggested README content for the 'NutriNet' project:
 
+# NutriNet
 
-# WasteWise Nutrition
-
-WasteWise Nutrition is a web application designed to help users make informed dietary choices by providing nutritional information and promoting sustainable eating habits.
+NutriNet is a web application designed to help users make informed dietary choices by providing nutritional information and promoting sustainable eating habits.
 
 ## Features
 
@@ -68,7 +67,7 @@ To set up the project locally:
 
 ## Contributing
 
-We welcome contributions to enhance WasteWise Nutrition. To contribute:
+We welcome contributions to enhance NutriNet. To contribute:
 
 1. Fork the repository.
 2. Create a new branch:
@@ -99,5 +98,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 
 For questions or suggestions, please open an issue in this repository.
-
-Team Earthians
+```
