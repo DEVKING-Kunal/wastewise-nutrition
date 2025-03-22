@@ -5,9 +5,10 @@ import { IngredientInput, Ingredient } from '@/components/IngredientInput';
 import { NutritionCard, NutritionData } from '@/components/NutritionCard';
 import { FadeIn, FadeInStagger } from '@/components/FadeIn';
 import TransitionLayout from '@/components/TransitionLayout';
-import { Calculator as CalculatorIcon, Save } from 'lucide-react';
+import { Calculator as CalculatorIcon, Save, SparkleIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { getPersonalizedInsights } from '@/utils/geminiService';
 
 // Mock nutrition data calculation - in a real app this would fetch from an API
 const calculateNutrition = (ingredients: Ingredient[]): NutritionData => {
@@ -43,6 +44,7 @@ const Calculator: React.FC = () => {
     fiber: 0,
     sugar: 0
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Recalculate nutrition whenever ingredients change
@@ -57,6 +59,48 @@ const Calculator: React.FC = () => {
     
     // In a real app, this would save to database
     toast.success("Recipe saved successfully");
+  };
+
+  const handleGetAiInsights = async () => {
+    if (ingredients.length === 0) {
+      toast.error("Please add at least one ingredient first");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // This would make a real call to the Gemini API once implemented
+      toast.info("To get AI insights, you need to configure the Gemini API. See the implementation guide in the geminiService.ts file.");
+      
+      // The actual implementation would look like this:
+      /*
+      const insights = await getPersonalizedInsights({
+        location: "Your location", // Would come from user profile
+        season: "Current season",  // Could be determined automatically
+        dietaryPreferences: ["Example preference"],
+        healthGoals: ["Example goal"],
+        currentNutrients: nutrition,
+        nutritionGoals: {
+          calories: 2000,
+          protein: 50,
+          carbs: 275,
+          fat: 65,
+          fiber: 28,
+          sugar: 25
+        }
+      });
+      
+      toast.success("AI insights generated!", {
+        description: "Check your nutrition panel for personalized recommendations."
+      });
+      */
+      
+    } catch (error) {
+      toast.error("Failed to generate AI insights");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -79,10 +123,22 @@ const Calculator: React.FC = () => {
                 <FadeIn className="bg-card rounded-xl border border-border shadow-sm p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-semibold">Ingredients</h2>
-                    <Button onClick={handleSaveRecipe} size="sm">
-                      <Save className="mr-2 h-4 w-4" />
-                      Save Recipe
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button 
+                        onClick={handleGetAiInsights} 
+                        variant="secondary" 
+                        size="sm"
+                        disabled={isLoading}
+                        className="bg-secondary/80 hover:bg-secondary/90"
+                      >
+                        <SparkleIcon className="mr-2 h-4 w-4 text-amber-500" />
+                        AI Insights
+                      </Button>
+                      <Button onClick={handleSaveRecipe} size="sm">
+                        <Save className="mr-2 h-4 w-4" />
+                        Save Recipe
+                      </Button>
+                    </div>
                   </div>
                   <IngredientInput 
                     ingredients={ingredients} 
