@@ -1,6 +1,6 @@
 Based on the information available, here's a suggested README content for the 'wastewise-nutrition' project:
 
-```markdown
+
 # WasteWise Nutrition
 
 WasteWise Nutrition is a web application designed to help users make informed dietary choices by providing nutritional information and promoting sustainable eating habits.
