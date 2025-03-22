@@ -28,13 +28,13 @@ export const Loader = ({ className, size = 'md', fullScreen = false, text }: Loa
           sizeClasses[size]
         )} />
         <div className={cn(
-          'absolute inset-0 rounded-full border-4 border-lime-200 dark:border-lime-800 opacity-30',
+          'absolute inset-0 rounded-full border-4 border-nutrinet-100 opacity-30',
           sizeClasses[size]
         )} />
         <div className={cn(
           'absolute inset-0 flex items-center justify-center'
         )}>
-          <div className="w-2/5 h-2/5 rounded-full bg-gradient-to-r from-emerald-400 to-lime-300 dark:from-emerald-600 dark:to-lime-500 animate-pulse-gentle" />
+          <div className="w-2/5 h-2/5 rounded-full bg-nutrinet-200 animate-pulse-gentle" />
         </div>
       </div>
       {text && (

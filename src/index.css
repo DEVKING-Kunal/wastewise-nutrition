@@ -16,24 +16,24 @@
     --popover: 0 0% 100%;
     --popover-foreground: 180 9% 10%;
 
-    --primary: 142 76% 36%;
+    --primary: 174 50% 30%;
     --primary-foreground: 180 9% 98%;
 
-    --secondary: 174 84% 95%;
-    --secondary-foreground: 142 76% 26%;
+    --secondary: 174 30% 96%;
+    --secondary-foreground: 174 50% 25%;
 
     --muted: 180 9% 96%;
     --muted-foreground: 180 5% 45%;
 
-    --accent: 142 84% 95%;
-    --accent-foreground: 142 76% 26%;
+    --accent: 174 60% 95%;
+    --accent-foreground: 174 50% 25%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 180 9% 90%;
     --input: 180 9% 90%;
-    --ring: 142 76% 36%;
+    --ring: 174 50% 30%;
 
     --radius: 0.75rem;
 
@@ -57,16 +57,16 @@
     --popover: 180 9% 6%;
     --popover-foreground: 180 5% 98%;
 
-    --primary: 142 76% 46%;
+    --primary: 174 50% 30%;
     --primary-foreground: 180 5% 98%;
 
-    --secondary: 142 30% 14%;
+    --secondary: 174 30% 12%;
     --secondary-foreground: 180 5% 98%;
 
     --muted: 180 9% 12%;
     --muted-foreground: 180 5% 65%;
 
-    --accent: 142 30% 14%;
+    --accent: 174 30% 12%;
     --accent-foreground: 180 5% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -74,7 +74,7 @@
 
     --border: 180 9% 15%;
     --input: 180 9% 15%;
-    --ring: 142 76% 50%;
+    --ring: 174 50% 40%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -99,7 +99,11 @@
 
   /* Glass effect */
   .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm dark:bg-black/30 dark:border-white/10;
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-md;
   }
 
   /* Card hover effect */
@@ -114,10 +118,5 @@
 
   .page-transition-exit {
     @apply animate-fade-out;
-  }
-  
-  /* Footer */
-  .footer-love {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-lime-500 dark:from-emerald-400 dark:to-lime-300 font-semibold;
   }
 }

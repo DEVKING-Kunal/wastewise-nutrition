@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { Suspense, lazy } from "react";
 import Loader from "@/components/Loader";
-import { ThemeProvider } from "@/components/ThemeProvider";
 
 // Lazy load pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -20,28 +19,26 @@ const Login = lazy(() => import("./pages/Login"));
 const queryClient = new QueryClient();
 
 const App = () => (
-  <ThemeProvider defaultTheme="light">
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Suspense fallback={<Loader fullScreen text="Loading NutriNet..." />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/calculator" element={<Calculator />} />
-                <Route path="/waste-tracker" element={<WasteTracker />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </AuthProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ThemeProvider>
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <AuthProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Suspense fallback={<Loader fullScreen text="Loading NutriNet..." />}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/calculator" element={<Calculator />} />
+              <Route path="/waste-tracker" element={<WasteTracker />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </AuthProvider>
+    </TooltipProvider>
+  </QueryClientProvider>
 );
 
 export default App;
