@@ -100,6 +100,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For questions or suggestions, please open an issue in this repository.
 
-```
-
-This template provides a comprehensive overview of the project, including setup instructions, technologies used, contribution guidelines, and contact information. Adjust the content as necessary to fit the specific details and goals of your project. 
+Team Earthians
