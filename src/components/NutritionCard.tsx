@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { Leaf, Info } from 'lucide-react';
@@ -64,7 +63,7 @@ export const NutritionCard: React.FC<NutritionCardProps> = ({
         </div>
         <span className="text-sm font-medium">{amount}{unit}</span>
       </div>
-      <Progress value={(amount / max) * 100} className="h-2" indicatorClassName={color} />
+      <Progress value={(amount / max) * 100} className={`h-2 ${color}`} />
     </div>
   );
 
