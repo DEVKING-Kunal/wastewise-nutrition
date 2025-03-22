@@ -4,6 +4,7 @@ import { FadeIn } from '@/components/FadeIn';
 import { Hero } from '@/components/Hero';
 import { Navbar } from '@/components/Navbar';
 import TransitionLayout from '@/components/TransitionLayout';
+import Footer from '@/components/Footer';
 
 const Index: React.FC = () => {
   useEffect(() => {
@@ -15,6 +16,7 @@ const Index: React.FC = () => {
       <Navbar />
       <TransitionLayout>
         <Hero />
+        <Footer />
       </TransitionLayout>
     </>
   );

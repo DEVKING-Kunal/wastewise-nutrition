@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { FadeIn, FadeInStagger } from '@/components/FadeIn';
 import TransitionLayout from '@/components/TransitionLayout';
@@ -8,11 +9,31 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
+import { useAuth } from '@/contexts/AuthContext';
+import Footer from '@/components/Footer';
+import Loader from '@/components/Loader';
 
 const Profile: React.FC = () => {
+  const { currentUser, logout, loading } = useAuth();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loading && !currentUser) {
+      navigate('/login');
+    }
+  }, [currentUser, loading, navigate]);
+
   const handleSaveSettings = () => {
     toast.success("Settings saved successfully");
   };
+  
+  if (loading) {
+    return <Loader fullScreen text="Loading profile..." />;
+  }
+
+  if (!currentUser) {
+    return null; // Will redirect via useEffect
+  }
 
   return (
     <>
@@ -34,11 +55,11 @@ const Profile: React.FC = () => {
                 <div className="bg-card rounded-xl border border-border shadow-sm p-6 space-y-6">
                   <div className="flex flex-col items-center text-center">
                     <Avatar className="h-24 w-24 mb-4">
-                      <AvatarImage src="https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=2124&auto=format&fit=crop" />
-                      <AvatarFallback>JD</AvatarFallback>
+                      <AvatarImage src={currentUser.photoURL || undefined} />
+                      <AvatarFallback>{currentUser.displayName?.charAt(0) || 'U'}</AvatarFallback>
                     </Avatar>
-                    <h2 className="text-xl font-semibold">Jane Doe</h2>
-                    <p className="text-muted-foreground">Member since June 2023</p>
+                    <h2 className="text-xl font-semibold">{currentUser.displayName || 'User'}</h2>
+                    <p className="text-muted-foreground">{currentUser.email}</p>
                   </div>
 
                   <div className="space-y-2">
@@ -58,7 +79,11 @@ const Profile: React.FC = () => {
                       <Shield className="mr-2 h-4 w-4" />
                       Privacy
                     </Button>
-                    <Button variant="outline" className="w-full justify-start text-destructive hover:text-destructive">
+                    <Button 
+                      variant="outline" 
+                      className="w-full justify-start text-destructive hover:text-destructive"
+                      onClick={logout}
+                    >
                       <LogOut className="mr-2 h-4 w-4" />
                       Log Out
                     </Button>
@@ -166,6 +191,7 @@ const Profile: React.FC = () => {
             </div>
           </FadeInStagger>
         </div>
+        <Footer />
       </TransitionLayout>
     </>
   );

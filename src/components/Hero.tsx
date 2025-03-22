@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Leaf, Apple, Utensils, BarChart2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { useState, useEffect } from 'react';
 
 interface FeatureCardProps {
   icon: React.ElementType;
@@ -24,6 +25,49 @@ const FeatureCard = ({ icon: Icon, title, description, className }: FeatureCardP
       <h3 className="text-lg font-semibold mb-2">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
     </div>
+  );
+};
+
+// Dynamic button with color animation
+const DynamicButton = ({ children, to }: { children: React.ReactNode; to: string }) => {
+  const [color, setColor] = useState(600);
+  const [direction, setDirection] = useState(1);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setColor(prev => {
+        const newColor = prev + direction * 20;
+        
+        if (newColor >= 700) {
+          setDirection(-1);
+          return 700;
+        } else if (newColor <= 400) {
+          setDirection(1);
+          return 400;
+        }
+        
+        return newColor;
+      });
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, [direction]);
+  
+  return (
+    <Button 
+      asChild 
+      size="lg" 
+      className={`rounded-full px-6 py-6 transition-colors duration-1000 bg-nutrinet-${color} hover:bg-nutrinet-700 relative overflow-hidden group`}
+      style={{ 
+        background: `rgb(var(--nutrinet-${color}))`,
+        boxShadow: '0 10px 25px -5px rgba(var(--nutrinet-600), 0.3)' 
+      }}
+    >
+      <Link to={to}>
+        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <span className="relative z-10 flex items-center">{children}</span>
+      </Link>
+    </Button>
   );
 };
 
@@ -52,12 +96,15 @@ export const Hero = () => {
                 Track nutrition, plan meals, and minimize food waste—all in one intuitive platform for a healthier you and planet.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Button asChild size="lg" className="rounded-full px-6 py-6 bg-nutrinet-600 hover:bg-nutrinet-700">
-                  <Link to="/calculator">
-                    Get Started <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="rounded-full px-6 py-6">
+                <DynamicButton to="/calculator">
+                  Get Started <ArrowRight className="ml-2 h-5 w-5" />
+                </DynamicButton>
+                <Button 
+                  asChild 
+                  variant="outline" 
+                  size="lg" 
+                  className="rounded-full px-6 py-6 backdrop-blur-sm border-nutrinet-100 hover:border-nutrinet-200"
+                >
                   <Link to="/waste-tracker">Track Food Waste</Link>
                 </Button>
               </div>

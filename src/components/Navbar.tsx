@@ -1,9 +1,19 @@
 
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Home, Calculator, LineChart, User, Menu, X } from 'lucide-react';
+import { Home, Calculator, LineChart, User, Menu, X, LogIn, LogOut } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from '@/components/ui/dropdown-menu';
 
 const NavItem = ({ icon: Icon, label, to, active }: { 
   icon: React.ElementType; 
@@ -37,6 +47,8 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { currentUser, logout } = useAuth();
 
   const navItems = [
     { icon: Home, label: 'Home', to: '/' },
@@ -62,6 +74,11 @@ export const Navbar = () => {
     // Close mobile menu when route changes
     setMobileMenuOpen(false);
   }, [location]);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+  };
 
   return (
     <header className={cn(
@@ -91,6 +108,45 @@ export const Navbar = () => {
               />
             ))}
           </nav>
+
+          {/* Auth Button (Desktop) */}
+          <div className="hidden md:block">
+            {currentUser ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center space-x-2 py-1.5 px-3 rounded-full hover:bg-muted transition-colors">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={currentUser.photoURL || undefined} />
+                      <AvatarFallback>{currentUser.displayName?.charAt(0) || 'U'}</AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium">
+                      {currentUser.displayName?.split(' ')[0] || 'User'}
+                    </span>
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate('/profile')}>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button 
+                onClick={() => navigate('/login')} 
+                className="bg-gradient-to-r from-nutrinet-500 to-nutrinet-600 hover:from-nutrinet-600 hover:to-nutrinet-700 text-white shadow-md"
+              >
+                <LogIn className="mr-2 h-4 w-4" />
+                Sign In
+              </Button>
+            )}
+          </div>
 
           {/* Mobile Menu Button */}
           <button 
@@ -127,6 +183,24 @@ export const Navbar = () => {
                 {item.label}
               </Link>
             ))}
+            
+            {currentUser ? (
+              <button 
+                onClick={handleLogout}
+                className="flex items-center px-4 py-3 rounded-lg transition-colors text-foreground hover:bg-muted"
+              >
+                <LogOut className="w-5 h-5 mr-3" />
+                Log Out
+              </button>
+            ) : (
+              <Link 
+                to="/login"
+                className="flex items-center px-4 py-3 rounded-lg transition-colors text-foreground hover:bg-muted"
+              >
+                <LogIn className="w-5 h-5 mr-3" />
+                Sign In
+              </Link>
+            )}
           </div>
         </motion.div>
       )}
